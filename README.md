@@ -1,5 +1,5 @@
 Hackrover Wi-Fi Localization Project
 
-Dependencies:
-RSSI - https://pypi.org/project/rssi/ \n
-Numpy - https://numpy.org/
+Dependencies:  
+RSSI - https://pypi.org/project/rssi/  
+Numpy - https://numpy.org/  
