@@ -1,23 +1,8 @@
-# import rssi
-
-# interface = 'Wi-Fi' 
-# # wlps01 name for Mac / Ubuntu 
-# # Type ifconfig into terminal
-
-# rssi_scanner = rssi.RSSI_Scan(interface)
-
-# # GL-MT300N-V2-XXX
-# # bd4,303,d22,d2a
-
-# ap_info = rssi_scanner.getAPinfo(sudo = True)
-
-# print(ap_info)
-# # python Get-pip.py
-
+import rssi
 import json
 
-xMax = 5
-yMax = 5
+xMax = 2
+yMax = 2
 gridPoints = []
 
 def saveFile():
@@ -34,7 +19,14 @@ def openFile():
     
 
 def getAP():
-    return [{'ssid': 'BeMerry', 'quality': '56/70', 'signal': -54}, {'ssid': 'NETGEAR76', 'quality': '62/70', 'signal': -48}, {'ssid': 'CenturyLink4688', 'quality': '42/70', 'signal': -68}]
+    interface = 'wlan0'
+    
+    rssi_scanner = rssi.RSSI_Scan(interface)
+    ssids = ['GL-MT300N-V2-bd4', 'GL-MT300N-V2-303', 'GL-MT300N-V2-d22', 'GL-MT300N-V2-d2a']
+    
+    ap_info = rssi_scanner.getAPinfo(ssids, sudo=True)
+    
+    return ap_info
      
 def findAP(inputAP):
     global gridPoints
@@ -57,6 +49,7 @@ def editPoint(x,y):
 recording = True
 editing = False
 locating = False
+reading = False
 
 x = 0
 y = 0
@@ -77,6 +70,8 @@ if(recording):
                 'ap': result
             }
 
+            print(point)
+
             gridPoints.append(point)
 
     print(gridPoints)
@@ -95,4 +90,8 @@ if(editing):
     if(x <= xMax and y <= yMax):
         editPoint(x,y)
     
+if(reading):
+    openFile()
+    for point in gridPoints:
+        print(point, '\n')
 
