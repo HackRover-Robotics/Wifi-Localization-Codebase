@@ -1,6 +1,6 @@
-import rssi
 import json
 import math
+import sys
 
 xMax = 2
 yMax = 2
@@ -20,15 +20,15 @@ def openFile():
         infile.close()
     
 
-def getAP():
-    interface = 'wlan0'
+# def getAP():
+#     interface = 'wlan0'
     
-    rssi_scanner = rssi.RSSI_Scan(interface)
-    ssids = ['GL-MT300N-V2-bd4', 'GL-MT300N-V2-303', 'GL-MT300N-V2-d22', 'GL-MT300N-V2-d2a']
+#     rssi_scanner = rssi.RSSI_Scan(interface)
+#     ssids = ['GL-MT300N-V2-bd4', 'GL-MT300N-V2-303', 'GL-MT300N-V2-d22', 'GL-MT300N-V2-d2a']
     
-    ap_info = rssi_scanner.getAPinfo(ssids, sudo=True)
+#     ap_info = rssi_scanner.getAPinfo(ssids, sudo=True)
     
-    return ap_info
+#     return ap_info
 
 
 def compareAP(inputAP):
@@ -62,6 +62,7 @@ def compareAP(inputAP):
         https://www.w3schools.com/python/python_dictionaries.asp
         "ap": [{"ssid": "BeMerry", "quality": "70/70", "signal": -37},  {"ssid": "DIRECT-F6-HP ENVY 4520 series", "quality": "52/70", "signal": -58}]
     '''
+    global gridPoints
 
     xArr = []
     yArr = []
@@ -72,7 +73,7 @@ def compareAP(inputAP):
         totalCalculatedDistance = 0.0
         
     
-        for i in range(3):  # go through each AP in inputAP (4 APs)
+        for i in range(4):  # go through each AP in inputAP (4 APs)
             inputQualityString = inputAP[i]["quality"].split("/")[0]
             inputQuality = float(inputQualityString)
 
@@ -91,10 +92,13 @@ def compareAP(inputAP):
             point[n] = calculatedDistance[1-4]
             which one is the smallest?
             '''
-            calculatedDistance = (compareQuality**2 - inputQuality**2) + (compareSignal**2 - inputSignal**2)
+            calculatedDistance = (compareQuality - inputQuality)**2 + (compareSignal - inputSignal)**2
             totalCalculatedDistance += calculatedDistance
+            print("total ", totalCalculatedDistance)
             
+        print("shortest", shortestDistance)
         if totalCalculatedDistance < shortestDistance:
+            print("here")
             shortestDistance = totalCalculatedDistance
             xArr.clear()
             yArr.clear()
@@ -128,45 +132,45 @@ def findAP(inputAP):
     return 
 
 
-def editPoint(x,y):
-    global gridPoints
-    for point in gridPoints:
-        if(point["x"] == x and point["y"] == y):
-            point["ap"] = getAP()
-            saveFile()
-            return
+# def editPoint(x,y):
+#     global gridPoints
+#     for point in gridPoints:
+#         if(point["x"] == x and point["y"] == y):
+#             point["ap"] = getAP()
+#             saveFile()
+#             return
         
 
-recording = True    # setting new points in fingerprint database
+recording = False    # setting new points in fingerprint database
 editing = False     # replacing AP RSSI on given X, Y point
-locating = False    # finding X, Y point given new AP RSSI
+locating = True    # finding X, Y point given new AP RSSI
 reading = False     # prints out all points and AP RSSI in database
 
 x = 0
 y = 0
 
-if(recording):
+# if(recording):
 
-    for y in range(yMax + 1):
-        for x in range(xMax + 1):
-            print("move nano to point " , x , ", " , y)
+#     for y in range(yMax + 1):
+#         for x in range(xMax + 1):
+#             print("move nano to point " , x , ", " , y)
             
-            input("press enter to record APs")
+#             input("press enter to record APs")
 
-            result = getAP()
+#             result = getAP()
             
-            point = {
-                'x': x,
-                'y': y,
-                'ap': result
-            }
+#             point = {
+#                 'x': x,
+#                 'y': y,
+#                 'ap': result
+#             }
 
-            print(point)
+#             print(point)
 
-            gridPoints.append(point)
+#             gridPoints.append(point)
 
-    print(gridPoints)
-    saveFile()
+#     print(gridPoints)
+#     saveFile()
 
 if(locating):
     openFile()
@@ -175,15 +179,14 @@ if(locating):
     location = compareAP(inputAP)
     print(location)
         
-if(editing):
-    openFile()
-    x = int(input("enter x point"))
-    y = int(input("enter y point"))
-    if(x <= xMax and y <= yMax):
-        editPoint(x,y)
+# if(editing):
+#     openFile()
+#     x = int(input("enter x point"))
+#     y = int(input("enter y point"))
+#     if(x <= xMax and y <= yMax):
+#         editPoint(x,y)
     
 if(reading):
     openFile()
     for point in gridPoints:
         print(point, '\n')
-
