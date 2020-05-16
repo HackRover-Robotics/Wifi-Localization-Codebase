@@ -70,7 +70,6 @@ def compareAP(inputAP):
     for point in gridPoints:
         compareAP = point['ap']
         totalCalculatedDistance = 0.0
-        
     
         for i in range(3):  # go through each AP in inputAP (4 APs)
             inputQualityString = inputAP[i]["quality"].split("/")[0]
@@ -117,16 +116,6 @@ def compareAP(inputAP):
 
     return {'x' : xAvg, 'y' : yAvg}
 
-def findAP(inputAP):
-    global gridPoints
-    for point in gridPoints:
-        # compare all access points in a certain range
-        compareAP(inputAP)
-        # return the closest x and y
-        point
-    
-    return 
-
 
 def editPoint(x,y):
     global gridPoints
@@ -141,11 +130,10 @@ recording = True    # setting new points in fingerprint database
 editing = False     # replacing AP RSSI on given X, Y point
 locating = False    # finding X, Y point given new AP RSSI
 reading = False     # prints out all points and AP RSSI in database
+navigating = False  # prints out direction to move based on input X, Y point
 
-x = 0
-y = 0
 
-if(recording):
+if recording:
 
     for y in range(yMax + 1):
         for x in range(xMax + 1):
@@ -168,22 +156,48 @@ if(recording):
     print(gridPoints)
     saveFile()
 
-if(locating):
+if locating:
     openFile()
     # getAP()
-    inputAP = [{"ssid": "BeMerry", "quality": "64/70", "signal": -46}, {"ssid": "DIRECT-F6-HP ENVY 4520 series", "quality": "42/70", "signal": -68}, {"ssid": "NETGEAR76", "quality": "50/70", "signal": -60}, {"ssid": "xfinitywifi", "quality": "31/70", "signal": -79}]
+    inputAP = getAP()
+    # [{"ssid": "BeMerry", "quality": "64/70", "signal": -46}, {"ssid": "DIRECT-F6-HP ENVY 4520 series", "quality": "42/70", "signal": -68}, {"ssid": "NETGEAR76", "quality": "50/70", "signal": -60}, {"ssid": "xfinitywifi", "quality": "31/70", "signal": -79}]
     location = compareAP(inputAP)
     print(location)
         
-if(editing):
+if editing:
     openFile()
     x = int(input("enter x point"))
     y = int(input("enter y point"))
-    if(x <= xMax and y <= yMax):
+    if x <= xMax and y <= yMax:
         editPoint(x,y)
     
-if(reading):
+if reading:
     openFile()
     for point in gridPoints:
         print(point, '\n')
 
+if navigating:
+    openFile()
+    destX = int(input("enter x destination"))
+    destY = int(input("enter y destination"))
+
+    while(True):
+        # find our location
+        locationPoint = compareAP(getAP())
+
+        # compare with input X, Y
+        if locationPoint['x'] == destX and locationPoint['y'] == destY:
+            print("location reached!")
+            break 
+
+        # find direction in Y axis until Y location == Y input
+        if locationPoint['y'] < destY:
+            print("move nano forwards")
+        elif locationPoint['y'] > destY:
+            print("move nano backwards")
+
+        # find direction in X axis until X location == X input
+        if locationPoint['x'] < destX:
+            print("shift the nano to the right")
+        elif locationPoint['x'] > destX:
+            print("shif the nano to the left")

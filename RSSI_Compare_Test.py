@@ -94,11 +94,11 @@ def compareAP(inputAP):
             '''
             calculatedDistance = (compareQuality - inputQuality)**2 + (compareSignal - inputSignal)**2
             totalCalculatedDistance += calculatedDistance
-            print("total ", totalCalculatedDistance)
+            # print("total ", totalCalculatedDistance)
             
-        print("shortest", shortestDistance)
+        # print("shortest", shortestDistance)
         if totalCalculatedDistance < shortestDistance:
-            print("here")
+            # print("here")
             shortestDistance = totalCalculatedDistance
             xArr.clear()
             yArr.clear()
@@ -121,17 +121,6 @@ def compareAP(inputAP):
 
     return {'x' : xAvg, 'y' : yAvg}
 
-def findAP(inputAP):
-    global gridPoints
-    for point in gridPoints:
-        # compare all access points in a certain range
-        compareAP(inputAP)
-        # return the closest x and y
-        point
-    
-    return 
-
-
 # def editPoint(x,y):
 #     global gridPoints
 #     for point in gridPoints:
@@ -143,8 +132,9 @@ def findAP(inputAP):
 
 recording = False    # setting new points in fingerprint database
 editing = False     # replacing AP RSSI on given X, Y point
-locating = True    # finding X, Y point given new AP RSSI
+locating = False    # finding X, Y point given new AP RSSI
 reading = False     # prints out all points and AP RSSI in database
+navigating = True
 
 x = 0
 y = 0
@@ -190,3 +180,30 @@ if(reading):
     openFile()
     for point in gridPoints:
         print(point, '\n')
+
+if navigating:
+    openFile()
+    destX = int(input("enter x destination\n"))
+    destY = int(input("enter y destination\n"))
+
+    while(True):
+        # find our location
+        inputAP = [{"ssid": "BeMerry", "quality": "70/70", "signal": -38}, {"ssid": "DIRECT-F6-HP ENVY 4520 series", "quality": "51/70", "signal": -59}, {"ssid": "NETGEAR76", "quality": "50/70", "signal": -60}, {"ssid": "CenturyLink4688", "quality": "45/70", "signal": -65}]
+        locationPoint = compareAP(inputAP)
+
+        # compare with input X, Y
+        if locationPoint['x'] == destX and locationPoint['y'] == destY:
+            print("location reached!")
+            break 
+
+        # find direction in Y axis until Y location == Y input
+        if locationPoint['y'] < destY:
+            print("move nano forwards")
+        elif locationPoint['y'] > destY:
+            print("move nano backwards")
+
+        # find direction in X axis until X location == X input
+        if locationPoint['x'] < destX:
+            print("shift nano right")
+        elif locationPoint['x'] > destX:
+            print("shift nano left")
