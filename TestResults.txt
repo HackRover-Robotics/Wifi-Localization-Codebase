@@ -1,0 +1,48 @@
+2 x 1 grid
+---------------------------------------------------------------------
+
+15 inch 2x1 grid
+{'x': 0, 'y': 0, 'ap': [{'ssid': 'GL-MT300N-V2-d22', 'quality': '70/70', 'signal': -39}, {'ssid': 'GL-MT300N-V2-bd4', 'quality': '70/70', 'signal': -29}, {'ssid': 'GL-MT300N-V2-d2a', 'quality': '70/70', 'signal': -36}, {'ssid': 'GL-MT300N-V2-303', 'quality': '66/70', 'signal': -44}]}
+{'x': 1, 'y': 0, 'ap': [{'ssid': 'GL-MT300N-V2-d22', 'quality': '62/70', 'signal': -48}, {'ssid': 'GL-MT300N-V2-bd4', 'quality': '70/70', 'signal': -33}, {'ssid': 'GL-MT300N-V2-d2a', 'quality': '66/70', 'signal': -44}, {'ssid': 'GL-MT300N-V2-303', 'quality': '70/70', 'signal': -25}]}
+
+Result - managed to obtain correct location 100% of the time (10/10 attempts)
+
+20 inch 2x1 grid
+{'x': 0, 'y': 0, 'ap': [{'ssid': 'GL-MT300N-V2-303', 'quality': '70/70', 'signal': -35}, {'ssid': 'GL-MT300N-V2-d2a', 'quality': '70/70', 'signal': -37}, {'ssid': 'GL-MT300N-V2-bd4', 'quality': '67/70', 'signal': -43}, {'ssid': 'GL-MT300N-V2-d22', 'quality': '70/70', 'signal': -40}]}
+{'x': 1, 'y': 0, 'ap': [{'ssid': 'GL-MT300N-V2-303', 'quality': '70/70', 'signal': -26}, {'ssid': 'GL-MT300N-V2-d2a', 'quality': '64/70', 'signal': -46}, {'ssid': 'GL-MT300N-V2-bd4', 'quality': '70/70', 'signal': -32}, {'ssid': 'GL-MT300N-V2-d22', 'quality': '70/70', 'signal': -39}]}
+
+Result - managed to obtain correct location 90% of the time (9/10 attempts)
+
+25 inch 2x1 grid
+{'x': 0, 'y': 0, 'ap': [{'ssid': 'GL-MT300N-V2-303', 'quality': '70/70', 'signal': -29}, {'ssid': 'GL-MT300N-V2-d22', 'quality': '70/70', 'signal': -38}, {'ssid': 'GL-MT300N-V2-bd4', 'quality': '69/70', 'signal': -41}, {'ssid': 'GL-MT300N-V2-d2a', 'quality': '58/70', 'signal': -52}]}
+{'x': 1, 'y': 0, 'ap': [{'ssid': 'GL-MT300N-V2-303', 'quality': '70/70', 'signal': -23}, {'ssid': 'GL-MT300N-V2-d22', 'quality': '65/70', 'signal': -45}, {'ssid': 'GL-MT300N-V2-bd4', 'quality': '70/70', 'signal': -32}, {'ssid': 'GL-MT300N-V2-d2a', 'quality': '68/70', 'signal': -42}]}
+
+Result - managed to obtain correct location 100% of the time (10/10 attempts)
+
+
+2 x 2 grid
+----------------------------------------------------------------------
+
+10 inch 2x2 grid
+Results 
+0,0 - 0/10
+1,0 - 10/10
+0,1 - 7/10
+1,1 - 5/10
+Average accuracy = 55%
+
+15 inch 2x2 grid
+Results 
+0,0 - 7/10
+1,0  - 6/10
+0,1 - 9/10
+1,1 - 5/10
+Average accuracy = 67.5%
+
+20 inch 2x2 grid
+Results 
+0,0 - 8/10
+1,0 - 6/10
+0,1 - 8/10
+1,1 - 6/10
+Average accuracy= 70%
